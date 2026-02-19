@@ -1048,3 +1048,12 @@ body.dark-mode .theme-toggle-btn:hover {
   padding: 4px 12px; border-radius: 50px;
   font-size: 0.8rem; font-weight: 700; margin-bottom: 10px;
 }
+
+/* --- 카테고리별 배지 색상 --- */
+/* Research: 파란색 */
+.item-badge.research, .item-badge-modal.research { background-color: #2563eb; }
+/* Conference: 초록색 */
+.item-badge.conference, .item-badge-modal.conference { background-color: #10b981; }
+/* Activity 또는 Award: 주황색 */
+.item-badge.activity, .item-badge-modal.activity,
+.item-badge.award, .item-badge-modal.award { background-color: #f59e0b; }

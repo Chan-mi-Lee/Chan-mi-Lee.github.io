@@ -334,7 +334,7 @@
           data-archive-date="May 2026"
           data-archive-video="resources/videos/ICRA26_supp.mp4"
           data-archive-text="To investigate the vulnerability of RL-based visuomotor policies, I proposed a 3D adversarial object that misleads the robot. As demonstrated in the supplementary video, while the policy normally guides the robot to the goal, the presence of the 3D adversarial object causes the robot to veer toward it. This targeted adversarial attack remains effective regardless of the initial camera (end-effector) pose or the object's spatial configuration.">
-        <div class="item-badge">Research</div>
+        <div class="item-badge research">Research</div>
         <img src="resources/pictures/ICRA26_supp_thumbnail.png" alt="ICRA 2026 Demo" class="gallery-img">
         <div class="gallery-caption">ICRA 2026 Paper Demo</div>
       </div>
@@ -344,17 +344,17 @@
           data-archive-title="Paper Presentation at RiTA 2025" 
           data-archive-date="Dec 2025"
           data-archive-text="I attended RiTA 2025 at King’s College London (Dec 17–19, 2025) and presented my paper titled 'Mode-Switching Frontier Search for Robust Autonomous Exploration in Complex Terrain'. It was an invaluable experience to exchange ideas with fellow researchers who share a passion for robotics. Being my first visit to the United Kingdom, this journey was both academically rewarding and personally meaningful.">
-        <div class="item-badge">Conference</div>
+        <div class="item-badge conference">Conference</div>
         <img src="resources/pictures/RiTA25.jpg" alt="RiTA 2025" class="gallery-img">
         <div class="gallery-caption">RiTA 2025 @ London</div>
       </div>
 
       <div class="gallery-item reveal" 
           data-archive-category="Conference"
-          data-archive-title="First Conference Presentation @ KCC 2024" 
+          data-archive-title="Paper Presentation @ KCC 2024" 
           data-archive-date="Jun 2024"
           data-archive-text="I participated in KCC 2024 held at Jeju ICC (June 26–28, 2024) and presented the paper titled 'Adversarial Attack on Visuomotor Policy'. Although it was my first conference presentation and I was quite nervous, the experience was incredibly empowering. Engaging in deep discussions and Q&A sessions with attendees helped me grow as a researcher and provided fresh perspectives on my future research directions.">
-        <div class="item-badge">Conference</div>
+        <div class="item-badge conference">Conference</div>
         <img src="resources/pictures/KCC24.jpg" alt="KCC 2024" class="gallery-img">
         <div class="gallery-caption">KCC 2024 @ Jeju</div>
       </div>
@@ -630,10 +630,13 @@
 
           // Content Injection
           if (category) {
-            modalBadge.innerText = category;
-            modalBadge.style.display = "inline-block";
+              modalBadge.innerText = category;
+              modalBadge.style.display = "inline-block";
+              
+              // 클래스를 초기화하고 카테고리명(소문자)을 추가해서 색상 적용
+              modalBadge.className = 'item-badge-modal ' + category.toLowerCase(); 
           } else {
-            modalBadge.style.display = "none";
+              modalBadge.style.display = "none";
           }
 
           modalTitle.innerText = title || "No Title";
