@@ -592,7 +592,7 @@
     //   });
     // });
 
-    /* --- Blog Modal Script with Video Support --- */
+    /* --- Archive Modal Script (Updated) --- */
     document.addEventListener("DOMContentLoaded", function () {
       const overlay = document.getElementById("overlay");
       const modalImg = document.getElementById("modalImg");
@@ -600,49 +600,54 @@
       const modalVideoSource = modalVideo.querySelector("source");
       const modalTitle = document.getElementById("modalTitle");
       const modalDescription = document.getElementById("modalDescription");
+      const modalDate = document.getElementById("modalDate");
       const closeModal = document.querySelector(".close-modal");
 
       const items = document.querySelectorAll(".gallery-item");
 
       items.forEach((item) => {
         item.addEventListener("click", function () {
-          const videoSrc = this.getAttribute("data-blog-video");
-          const imgSrc = this.querySelector("img").src;
+          // HTML의 data-archive-... 속성들과 이름을 일치시킵니다.
+          const videoSrc = this.getAttribute("data-archive-video");
+          const title = this.getAttribute("data-archive-title");
+          const date = this.getAttribute("data-archive-date");
+          const text = this.getAttribute("data-archive-text");
+          const category = this.getAttribute("data-archive-category");
 
           // Reset displays
           modalImg.style.display = "none";
           modalVideo.style.display = "none";
-          modalVideo.pause(); // Stop any playing video
+          modalVideo.pause();
 
           if (videoSrc) {
-            // If there is a video, show video player
             modalVideoSource.src = videoSrc;
             modalVideo.load();
             modalVideo.style.display = "block";
           } else {
-            // If no video, show image
-            modalImg.src = imgSrc;
+            modalImg.src = this.querySelector("img").src;
             modalImg.style.display = "block";
           }
 
-          modalTitle.innerText = this.getAttribute("data-blog-title") || "New Post";
-          modalDescription.innerText = this.getAttribute("data-blog-text") || "";
+          // 데이터 주입 (Category가 있으면 제목 앞에 붙여줍니다)
+          modalTitle.innerText = category ? `[${category}] ${title}` : title;
+          modalDate.innerText = date || "";
+          modalDescription.innerText = text || "No description available.";
 
           overlay.classList.add("active");
           document.body.style.overflow = "hidden";
         });
       });
 
-      // Close logic
       overlay.addEventListener("click", function (e) {
         if (e.target === overlay || e.target === closeModal) {
           overlay.classList.remove("active");
-          modalVideo.pause(); // Stop video when closing
+          modalVideo.pause();
           document.body.style.overflow = "auto";
         }
       });
     });
 
+    
     // Scroll Reveal Animation
     document.addEventListener('DOMContentLoaded', function () {
       const reveals = document.querySelectorAll('.reveal');
