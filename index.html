@@ -343,7 +343,7 @@
           data-archive-category="Conference"
           data-archive-title="Paper Presentation at RiTA 2025" 
           data-archive-date="Dec 2025"
-          data-archive-text="I attended RiTA 2025 at King’s College London (Dec 17–19, 2025) and presented my paper titled '[Your Paper Title]'. It was an invaluable experience to exchange ideas with fellow researchers who share a passion for robotics. Being my first visit to the United Kingdom, this journey was both academically rewarding and personally meaningful.">
+          data-archive-text="I attended RiTA 2025 at King’s College London (Dec 17–19, 2025) and presented my paper titled 'Mode-Switching Frontier Search for Robust Autonomous Exploration in Complex Terrain'. It was an invaluable experience to exchange ideas with fellow researchers who share a passion for robotics. Being my first visit to the United Kingdom, this journey was both academically rewarding and personally meaningful.">
         <div class="item-badge">Conference</div>
         <img src="resources/pictures/RiTA25.jpg" alt="RiTA 2025" class="gallery-img">
         <div class="gallery-caption">RiTA 2025 @ London</div>
@@ -353,7 +353,7 @@
           data-archive-category="Conference"
           data-archive-title="First Conference Presentation @ KCC 2024" 
           data-archive-date="Jun 2024"
-          data-archive-text="I participated in KCC 2024 held at Jeju ICC (June 26–28, 2024) and presented the paper titled '[Your Paper Title]'. Although it was my first conference presentation and I was quite nervous, the experience was incredibly empowering. Engaging in deep discussions and Q&A sessions with attendees helped me grow as a researcher and provided fresh perspectives on my future research directions.">
+          data-archive-text="I participated in KCC 2024 held at Jeju ICC (June 26–28, 2024) and presented the paper titled 'Adversarial Attack on Visuomotor Policy'. Although it was my first conference presentation and I was quite nervous, the experience was incredibly empowering. Engaging in deep discussions and Q&A sessions with attendees helped me grow as a researcher and provided fresh perspectives on my future research directions.">
         <div class="item-badge">Conference</div>
         <img src="resources/pictures/KCC24.jpg" alt="KCC 2024" class="gallery-img">
         <div class="gallery-caption">KCC 2024 @ Jeju</div>
@@ -474,14 +474,15 @@
     <div class="modal-content">
       <span class="close-modal">&times;</span>
       
-      <img src="" alt="Expanded Image" id="modalImg" />
-      
-      <video id="modalVideo" controls style="width:100%; display:none; max-height:450px; background:#000;">
-        <source src="" type="video/mp4">
-        Your browser does not support the video tag.
-      </video>
+      <div class="modal-media-container">
+        <img src="" alt="Expanded Image" id="modalImg" />
+        <video id="modalVideo" controls>
+          <source src="" type="video/mp4">
+        </video>
+      </div>
 
       <div class="modal-text-container">
+        <span id="modalBadge" class="item-badge-modal"></span>
         <h3 id="modalTitle"></h3>
         <span id="modalDate"></span>
         <p id="modalDescription"></p>
@@ -597,7 +598,7 @@
       const overlay = document.getElementById("overlay");
       const modalImg = document.getElementById("modalImg");
       const modalVideo = document.getElementById("modalVideo");
-      const modalVideoSource = modalVideo.querySelector("source");
+      const modalBadge = document.getElementById("modalBadge"); // New
       const modalTitle = document.getElementById("modalTitle");
       const modalDescription = document.getElementById("modalDescription");
       const modalDate = document.getElementById("modalDate");
@@ -607,20 +608,19 @@
 
       items.forEach((item) => {
         item.addEventListener("click", function () {
-          // HTML의 data-archive-... 속성들과 이름을 일치시킵니다.
           const videoSrc = this.getAttribute("data-archive-video");
           const title = this.getAttribute("data-archive-title");
           const date = this.getAttribute("data-archive-date");
           const text = this.getAttribute("data-archive-text");
           const category = this.getAttribute("data-archive-category");
 
-          // Reset displays
-          modalImg.style.display = "none";
+          // Media Switcher
           modalVideo.style.display = "none";
+          modalImg.style.display = "none";
           modalVideo.pause();
 
           if (videoSrc) {
-            modalVideoSource.src = videoSrc;
+            modalVideo.querySelector("source").src = videoSrc;
             modalVideo.load();
             modalVideo.style.display = "block";
           } else {
@@ -628,10 +628,17 @@
             modalImg.style.display = "block";
           }
 
-          // 데이터 주입 (Category가 있으면 제목 앞에 붙여줍니다)
-          modalTitle.innerText = category ? `[${category}] ${title}` : title;
+          // Content Injection
+          if (category) {
+            modalBadge.innerText = category;
+            modalBadge.style.display = "inline-block";
+          } else {
+            modalBadge.style.display = "none";
+          }
+
+          modalTitle.innerText = title || "No Title";
           modalDate.innerText = date || "";
-          modalDescription.innerText = text || "No description available.";
+          modalDescription.innerText = text || "";
 
           overlay.classList.add("active");
           document.body.style.overflow = "hidden";
@@ -646,7 +653,6 @@
         }
       });
     });
-
     
     // Scroll Reveal Animation
     document.addEventListener('DOMContentLoaded', function () {
