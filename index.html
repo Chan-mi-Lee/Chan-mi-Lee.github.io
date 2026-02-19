@@ -518,43 +518,94 @@
     //   });
     // });
     /* --- Blog Modal Script (Overlay Updated) --- */
+    // document.addEventListener("DOMContentLoaded", function () {
+    //   const overlay = document.getElementById("overlay");
+    //   const modalImg = document.getElementById("modalImg");
+    //   const modalTitle = document.getElementById("modalTitle");
+    //   const modalDescription = document.getElementById("modalDescription");
+    //   const modalDate = document.getElementById("modalDate"); // Optional: for date
+    //   const closeModal = document.querySelector(".close-modal");
+
+    //   // Select all gallery items
+    //   const items = document.querySelectorAll(".gallery-item");
+
+    //   items.forEach((item) => {
+    //     item.addEventListener("click", function () {
+    //       const img = this.querySelector("img");
+          
+    //       // Extract blog content from HTML 'data-' attributes
+    //       const title = this.getAttribute("data-blog-title") || "New Post";
+    //       const date = this.getAttribute("data-blog-date") || "";
+    //       const text = this.getAttribute("data-blog-text") || "Coming soon...";
+
+    //       // Inject data into the modal
+    //       modalImg.src = img.src;
+    //       modalTitle.innerText = title;
+    //       modalDescription.innerText = text;
+    //       if (modalDate) modalDate.innerText = date;
+
+    //       // Show the modal
+    //       overlay.classList.add("active");
+    //       document.body.style.overflow = "hidden"; // Prevent background scrolling
+    //     });
+    //   });
+
+    //   // Close modal when clicking background or the 'X' button
+    //   overlay.addEventListener("click", function (e) {
+    //     if (e.target === overlay || e.target === closeModal) {
+    //       overlay.classList.remove("active");
+    //       document.body.style.overflow = "auto"; // Restore scrolling
+    //     }
+    //   });
+    // });
+
+    /* --- Blog Modal Script with Video Support --- */
     document.addEventListener("DOMContentLoaded", function () {
       const overlay = document.getElementById("overlay");
       const modalImg = document.getElementById("modalImg");
+      const modalVideo = document.getElementById("modalVideo");
+      const modalVideoSource = modalVideo.querySelector("source");
       const modalTitle = document.getElementById("modalTitle");
       const modalDescription = document.getElementById("modalDescription");
-      const modalDate = document.getElementById("modalDate"); // Optional: for date
       const closeModal = document.querySelector(".close-modal");
 
-      // Select all gallery items
       const items = document.querySelectorAll(".gallery-item");
 
       items.forEach((item) => {
         item.addEventListener("click", function () {
-          const img = this.querySelector("img");
-          
-          // Extract blog content from HTML 'data-' attributes
-          const title = this.getAttribute("data-blog-title") || "New Post";
-          const date = this.getAttribute("data-blog-date") || "";
-          const text = this.getAttribute("data-blog-text") || "Coming soon...";
+          const videoSrc = this.getAttribute("data-blog-video");
+          const imgSrc = this.querySelector("img").src;
 
-          // Inject data into the modal
-          modalImg.src = img.src;
-          modalTitle.innerText = title;
-          modalDescription.innerText = text;
-          if (modalDate) modalDate.innerText = date;
+          // Reset displays
+          modalImg.style.display = "none";
+          modalVideo.style.display = "none";
+          modalVideo.pause(); // Stop any playing video
 
-          // Show the modal
+          if (videoSrc) {
+            // If there is a video, show video player
+            modalVideoSource.src = videoSrc;
+            modalVideo.load();
+            modalVideo.style.display = "block";
+          } else {
+            // If no video, show image
+            modalImg.src = imgSrc;
+            modalImg.style.display = "block";
+          }
+
+          modalTitle.innerText = this.getAttribute("data-blog-title") || "New Post";
+          modalDescription.innerText = this.getAttribute("data-blog-text") || "";
+
           overlay.classList.add("active");
-          document.body.style.overflow = "hidden"; // Prevent background scrolling
+          document.body.style.overflow = "hidden";
         });
       });
 
-      // Close modal when clicking background or the 'X' button
+      // Close logic
       overlay.addEventListener("click", function (e) {
         if (e.target === overlay || e.target === closeModal) {
           overlay.classList.remove("active");
-          document.body.style.overflow = "auto"; // Restore scrolling
+          modalVideo.pause(); // Stop video when closing
+          document.body.style.overflow = "auto";
         }
       });
     });
