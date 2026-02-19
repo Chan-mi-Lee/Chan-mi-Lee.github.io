@@ -1015,3 +1015,36 @@ body.dark-mode footer {
 body.dark-mode .theme-toggle-btn:hover {
   background-color: rgba(255, 255, 255, 0.1);
 }
+
+/* --- 사진 잘림 방지 및 배지 추가 (최소 수정본) --- */
+.modal-media-container {
+  width: 100%;
+  background-color: #000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#modalImg, #modalVideo {
+  max-width: 100%;
+  max-height: 500px; /* 높이 제한 */
+  object-fit: contain !important; /* 사진 전체 다 보이게 함 */
+  display: block;
+}
+
+/* 카드 상단 배지 */
+.gallery-item { position: relative; }
+.item-badge {
+  position: absolute; top: 12px; left: 12px;
+  background: var(--primary-color); color: #fff;
+  padding: 4px 12px; border-radius: 50px;
+  font-size: 0.75rem; font-weight: 700; z-index: 5;
+}
+
+/* 모달 내부 배지 */
+.item-badge-modal {
+  display: inline-block;
+  background: var(--primary-color); color: #fff;
+  padding: 4px 12px; border-radius: 50px;
+  font-size: 0.8rem; font-weight: 700; margin-bottom: 10px;
+}
